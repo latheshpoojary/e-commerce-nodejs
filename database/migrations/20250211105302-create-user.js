@@ -12,6 +12,24 @@ module.exports = {
       name:{
         type:Sequelize.STRING
       },
+      email:{
+        type:Sequelize.STRING,
+        unique:true
+      },
+      password:{
+        type:Sequelize.STRING,
+      },
+      phone:{
+        type:Sequelize.INTEGER
+      },
+      address:{
+        references:{
+          model:'address',
+          key:'id'
+        },
+        type:Sequelize.INTEGER
+      },
+      
       createdAt: { // Add createdAt timestamp
         allowNull: false,
         type: Sequelize.DATE,
@@ -20,6 +38,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      deletedAt:{
+        type:Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {

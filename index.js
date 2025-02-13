@@ -12,7 +12,7 @@ app.use(cors({
     origin:"*" //basic setup
 }))
 
-app.use('/api/v1/user',userRoute)
+app.use('/api/v1/auth',userRoute)
 
 app.use('*',catchAsync(async (req,res,next)=>{
     throw new AppError(`Can't find ${req.originalUrl} on this server`,404);
