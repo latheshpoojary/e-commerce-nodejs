@@ -1,5 +1,5 @@
 const ENV_KEYS = require('../environment');
-const AppError = require('../services/appError');
+const AppError = require('../utils/appError');
 
 
 const devErrorHandler = (error,res)=>{

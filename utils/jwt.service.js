@@ -1,13 +1,13 @@
 const ENV_KEYS = require('../environment');
 const {sign,verify} = require('jsonwebtoken')
 
-const {user,us} = require('../database/config/database.config');
+const {userToken} = require('../database/config/database.config');
 const buildToken = async (user,role)=>{
 
 
     const payload = {
         name:user.name,
-        id:user.id,
+        id:user.user_id,
         role
     }
     const accessToken =  sign(payload,ENV_KEYS.JWT_SECRET,{
@@ -17,33 +17,39 @@ const buildToken = async (user,role)=>{
     const refreshToken = sign(payload,ENV_KEYS.REFRESH_SECRET,{
         expiresIn:ENV_KEYS.R_EXPIRE_IN
     })
-     (user.id,"User");
+    console.log();
     
-    const userToken = await UserToken.findOne({
+    
+    const userTokenDetails = await userToken.findOne({
         where:{
-            userId:user.id
+            userId:user.user_id
         }
     })
-     (userToken);
+   
     
-    if(userToken)
-        await userToken.destroy();
-    await UserToken.create({
-        userId:user.id,
+    if(userTokenDetails)
+        await userTokenDetails.destroy();
+    await userToken.create({
+        userId:user.user_id,
         refreshToken
     })
+    console.log(accessToken,refreshToken);
+    
 
     return {accessToken,refreshToken}
 }
 
 const verifyRefreshToken = async (token)=>{
-
-    const userToken = await UserToken.findOne({
+    console.log(token);
+    
+    const userTokeDetails = await userToken.findOne({
         where:{
             refreshToken:token
         }
     })
-    if(!userToken)  throw new Error("Invalid refresh token");
+    console.log(userTokeDetails);
+    
+    if(!userTokeDetails)  throw new Error("Invalid refresh token");
 
     const payload = verify(token,ENV_KEYS.REFRESH_SECRET);
 

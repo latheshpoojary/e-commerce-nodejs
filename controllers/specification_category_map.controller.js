@@ -1,9 +1,8 @@
-const  catchAsync  = require("../services/catchAsync");
-const AppError = require("../services/appError");
-const CategorySpecificationMap = require("../database/models/category_specification.model");
-const Category = require("../database/models/category.model");
-const SpecificationCategory = require("../database/models/specification.model");
-const Specification = require("../database/models/specification.model");
+const  catchAsync  = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+
+const {category,categorySpecification, specification} = require("../database/config/database.config");
+
 const mapCategorySpecification = catchAsync(async (req, res, next) => {
   const { data } = req.body;
   console.log(data[1],"Data of the body");
@@ -15,11 +14,13 @@ const mapCategorySpecification = catchAsync(async (req, res, next) => {
     const {category_id,specification_id} = data[i];
     console.log(category_id,specification_id,"Specificationid and category id");
     
-    for(let j=0;j<specification_id.length-1;j++){
-        await CategorySpecificationMap.create({
+    for(let j=0;j<=specification_id.length-1;j++){
+      console.log(categorySpecification,"category specification");
+      
+        await categorySpecification.create({
           
-            category_id,
-            specification_id:specification_id[j]
+          categoryRef_id:category_id,
+          specificationRef_id:specification_id[j]
         })
     }
     
@@ -30,26 +31,32 @@ const mapCategorySpecification = catchAsync(async (req, res, next) => {
   })
 });
 
-const categorySpecification = catchAsync(async (req,res,next)=>{
+const getCategoryList = catchAsync(async (req,res,next)=>{
   const params =req.params;
   const category_id = parseInt(params.category_id);
   console.log(category_id,"category id");
+  console.log(categorySpecification);
   
-  const allCategorySpecification = await CategorySpecificationMap.findAndCountAll({
+  const allCategorySpecification = await categorySpecification.findAll({
     where:{
-        category_id
+      categoryRef_id:category_id
     },
-    attributes:['category_id'],
     include:[{
-      model:Category,
-      as: 'specifications'
-
-    }]
+      model:specification,
+      attributes:['name']
+      
+    }],
+    attributes:[]
   })
-  return res.status(200).json(allCategorySpecification)
+  const specificationNames = allCategorySpecification.map(item => {
+    return {
+      name:item.specification.name
+    }
+  });
+  return res.status(200).json(specificationNames)
   
 })
 module.exports = {
   mapCategorySpecification,
-  categorySpecification
+  getCategoryList
 }

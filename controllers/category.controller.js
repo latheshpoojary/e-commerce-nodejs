@@ -1,11 +1,11 @@
-const catchAsync = require('../services/catchAsync');
-const AppError = require('../services/appError');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 const {category} = require('../database/config/database.config');
 // 
 const create = catchAsync(async (req,res,next)=>{
     const {name,desc} = req.body;
 
-    if(!name || !desc) return next(new AppError('name and description is required',400))
+    if(!name) return next(new AppError('name  is required',400))
 
     const newCategory = await category.create(req.body);
 

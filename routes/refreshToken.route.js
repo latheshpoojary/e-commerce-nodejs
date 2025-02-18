@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { verifyRefreshToken } = require('../services/jwt.service');
+const { verifyRefreshToken } = require('../utils/jwt.service');
 
 
 const router = Router();

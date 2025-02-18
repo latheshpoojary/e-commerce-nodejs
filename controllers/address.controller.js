@@ -1,5 +1,5 @@
-const catchAsync = require("../services/catchAsync");
-const AppError = require("../services/appError");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 const { address, user } = require("../database/config/database.config");
 const { where } = require("sequelize");
 const addAddress = catchAsync(async (req, res, next) => {

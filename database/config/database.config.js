@@ -7,12 +7,28 @@ const config = require("../config/config")[ENV_KEYS.NODE_ENV];
 const sequelize = new Sequelize(config);
 
 const address = require("../models/address.model")(sequelize, Sequelize);
-// const categorySpecification = require('../models/category_specification.model')(sequelize,Sequelize)
+
 const category = require("../models/category.model")(sequelize, Sequelize);
-// const seller = require('../models/seller.model')(sequelize,Sequelize)
-// const specification = require('../models/specification.model')(sequelize,Sequelize)
+const seller = require("../models/seller.model")(sequelize, Sequelize);
+const specification = require("../models/specification.model")(
+  sequelize,
+  Sequelize
+);
 const user = require("../models/user.model")(sequelize, Sequelize);
 const userToken = require("../models/userToken.model")(sequelize, Sequelize);
+const categorySpecification = require("../models/category_specification.model")(
+  sequelize,
+  Sequelize
+);
+const product = require("../models/product.model")(
+  sequelize,
+  Sequelize
+);
+const productSpecification = require("../models/product_specification.model")(
+  sequelize,
+  Sequelize
+);
+
 
 sequelize
   .authenticate()
@@ -28,22 +44,41 @@ sequelize
     console.log(error);
   });
 
-
 // Associations
 user.belongsTo(address, { foreignKey: "addressId" });
 address.hasMany(user, { foreignKey: "addressId" });
-userToken.belongsTo(user,{foreignKey:'userId'});
-user.hasOne(userToken,{foreignKey:'userId'})
+userToken.belongsTo(user, { foreignKey: "userId" });
+user.hasOne(userToken, { foreignKey: "userId" });
+categorySpecification.belongsTo(category, {
+  foreignKey: "categoryRef_id",
+  targetKey: "category_id", // Ensure this is unique
+});
+categorySpecification.belongsTo(specification, {
+  foreignKey: "specificationRef_id",
+  targetKey: "specification_id",
+});
 
-
-
+product.belongsTo(seller, {
+  foreignKey: "seller_id",
+  targetKey: "seller_id",
+})
+productSpecification.belongsTo(product, {
+  foreignKey: "product_id",
+  targetKey: "product_id", // Ensure this is unique
+});
+productSpecification.belongsTo(specification, {
+  foreignKey: "specificationRef_id",
+  targetKey: "specification_id",
+});
 
 module.exports = {
   address,
   category,
-  //  categorySpecification,
-  //  seller,
+  seller,
   user,
-  //  specification,
+  specification,
   userToken,
+  categorySpecification,
+  product,
+  productSpecification
 };

@@ -3,14 +3,17 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const ENV_KEYS = require('./environment');
 const globalErrorHandler = require('./middlewares/error.middleware');
-const AppError = require('./services/appError');
-const catchAsync = require('./services/catchAsync');
+const AppError = require('./utils/appError');
+const catchAsync = require('./utils/catchAsync');
+
+const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
 const addressRoute = require('./routes/address.route');
 const sellerRoute = require('./routes/seller.route')
 const categoryRoute = require('./routes/category.route')
 const specificationCategoryRoute = require('./routes/specification_category.route')
 const specificationCategoryMapRoute = require('./routes/category_specification_map.route')
+const productRoute = require('./routes/product.route')
 const refreshRoute = require('./routes/refreshToken.route')
 // require('./database/models/association')
 const app = express();
@@ -21,12 +24,14 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-app.use('/api/v1/auth',userRoute)
+app.use('/api/v1/auth',authRoute)
+app.use('/api/v1/user',userRoute)
 app.use('/api/v1/seller',sellerRoute)
 app.use('/api/v1/category',categoryRoute);
 app.use('/api/v1/specification',specificationCategoryRoute);
-app.use('/api/v1/category_specification_map',specificationCategoryMapRoute);
+app.use('/api/v1/category_specification',specificationCategoryMapRoute);
 app.use('/api/v1/address',addressRoute);
+app.use('/api/v1/product',productRoute);
 app.use('/api/v1/refresh',refreshRoute);
 
 app.use('*',catchAsync(async (req,res,next)=>{
