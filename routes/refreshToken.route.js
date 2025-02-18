@@ -1,0 +1,13 @@
+const {Router} = require('express');
+const { verifyRefreshToken } = require('../services/jwt.service');
+
+
+const router = Router();
+
+router.get('/',(req,res,next)=>{
+    const token = req.cookies;
+     (token);
+    
+});
+
+module.exports = router

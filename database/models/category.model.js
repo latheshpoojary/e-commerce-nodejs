@@ -1,37 +1,29 @@
-const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "address",
+    "category",
     {
-      address_id: {
+      category_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      pincode: {
+      name: {
         type: DataTypes.STRING,
       },
-      city: {
+      desc: {
         type: DataTypes.STRING,
       },
-      state: {
-        type: DataTypes.STRING,
-      },
-      house_name: {
-        type: DataTypes.STRING,
-      },
+
       deletedAt: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.DATE,
       },
     },
     {
       paranoid: true, //actual data will not be deleted from the table;only work when the deleteAt field present in the table
       freezeTableName: true,
-      modelName: "address",
-      timestamps: true,
+      modelName: "category",
     }
   );
 };
-

@@ -11,7 +11,11 @@ const ENV_KEYS = {
     NODE_ENV:process.env.NODE_ENV,
     DB_DIALECT:process.env.DB_DIALECT,
     DB_PORT:process.env.DB_PORT,
-    SALT:process.env.SALT
+    SALT:process.env.SALT,
+    JWT_SECRET:process.env.JWT_SECRET,
+    EXPIRE_IN:process.env.EXPIRE_IN,
+    REFRESH_SECRET:process.env.REFRESH_SECRET,
+    R_EXPIRE_IN:process.env.R_EXPIRE_IN,
 }
 
 module.exports = ENV_KEYS
