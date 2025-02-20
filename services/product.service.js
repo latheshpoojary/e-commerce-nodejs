@@ -11,16 +11,18 @@ const _addProduct = async (req, next) => {
 
   if (!product_name || !price || !stock || specification.length === 0)
     return next(
-      new AppError("name,price,stock,category and specification is required",400)
+      new AppError(
+        "name,price,stock,category and specification is required",
+        400
+      )
     );
-  
 
   const newProduct = await product.create({
     product_name,
     price,
     desc,
     stock,
-    seller_id: 1,
+    seller_id: req.user.id,
   });
   if (newProduct) {
     for (let i = 0; i <= specification.length - 1; i++) {
@@ -41,31 +43,33 @@ const _getProductDetails = async (req, next) => {
     where: {
       product_id,
     },
-    include: [{
-        model:seller,
-        attributes:['company_name']
-    }],
-    attributes:['product_id','product_name','price','desc']
+    include: [
+      {
+        model: seller,
+        attributes: ["company_name"],
+      },
+    ],
+    attributes: ["product_id", "product_name", "price", "desc"],
   });
   const specification_details = await productSpecification.findAll({
-    where:{
-        product_id
+    where: {
+      product_id,
     },
-    include:[
-        {
-            model:specification,
-            attributes:['name']
-        }
+    include: [
+      {
+        model: specification,
+        attributes: ["name"],
+      },
     ],
-    attributes:['spec_value']
-  })
+    attributes: ["spec_value"],
+  });
   return {
     productDetails,
-    specification_details
+    specification_details,
   };
 };
 
 module.exports = {
   _addProduct,
-  _getProductDetails
+  _getProductDetails,
 };

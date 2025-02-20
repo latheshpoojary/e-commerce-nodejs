@@ -20,10 +20,7 @@ const categorySpecification = require("../models/category_specification.model")(
   sequelize,
   Sequelize
 );
-const product = require("../models/product.model")(
-  sequelize,
-  Sequelize
-);
+const product = require("../models/product.model")(sequelize, Sequelize);
 const productSpecification = require("../models/product_specification.model")(
   sequelize,
   Sequelize
@@ -32,19 +29,12 @@ const deliveryPartner = require("../models/delivery_partner.model")(
   sequelize,
   Sequelize
 );
-const cartTable = require("../models/cart.model")(
-  sequelize,
-  Sequelize
-);
-const order = require("../models/order.model")(
-  sequelize,
-  Sequelize
-);
+const cartTable = require("../models/cart.model")(sequelize, Sequelize);
+const order = require("../models/order.model")(sequelize, Sequelize);
 const order_details = require("../models/order_details.model")(
   sequelize,
   Sequelize
 );
-
 
 sequelize
   .authenticate()
@@ -61,8 +51,11 @@ sequelize
   });
 
 // Associations
-user.belongsTo(address, { foreignKey: "addressId" });
-address.hasMany(user, { foreignKey: "addressId" });
+user.hasMany(address, { foreignKey: "addressId" });
+address.belongsTo(user, {
+  foreignKey: "user_id", // This should match the foreign key in Address model
+});
+// address.hasMany(user, { foreignKey: "addressId" });
 userToken.belongsTo(user, { foreignKey: "userId" });
 user.hasOne(userToken, { foreignKey: "userId" });
 categorySpecification.belongsTo(category, {
@@ -77,7 +70,7 @@ categorySpecification.belongsTo(specification, {
 product.belongsTo(seller, {
   foreignKey: "seller_id",
   targetKey: "seller_id",
-})
+});
 productSpecification.belongsTo(product, {
   foreignKey: "product_id",
   targetKey: "product_id", // Ensure this is unique
@@ -86,27 +79,26 @@ productSpecification.belongsTo(specification, {
   foreignKey: "specificationRef_id",
   targetKey: "specification_id",
 });
-cartTable.belongsTo(product,{
+cartTable.belongsTo(product, {
   foreignKey: "product_id",
   targetKey: "product_id",
-})
-cartTable.belongsTo(user,{
+});
+cartTable.belongsTo(user, {
   foreignKey: "user_id",
   targetKey: "user_id",
-})
-order.belongsTo(user,{
+});
+order.belongsTo(user, {
   foreignKey: "user_id",
   targetKey: "user_id",
-})
-order_details.belongsTo(order,{
+});
+order_details.belongsTo(order, {
   foreignKey: "order_id",
   targetKey: "order_id",
-})
-order_details.belongsTo(product,{
+});
+order_details.belongsTo(product, {
   foreignKey: "product_id",
   targetKey: "product_id",
-})
-
+});
 
 module.exports = {
   address,
@@ -121,5 +113,5 @@ module.exports = {
   deliveryPartner,
   cartTable,
   order,
-  order_details
+  order_details,
 };

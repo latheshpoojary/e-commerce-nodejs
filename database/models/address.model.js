@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       pincode: {
         type: DataTypes.STRING,
+        required:true
       },
       city: {
         type: DataTypes.STRING,
       },
       state: {
         type: DataTypes.STRING,
+        required:true
       },
       house_name: {
         type: DataTypes.STRING,

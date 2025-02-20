@@ -31,7 +31,6 @@ const _register = async (req, next) => {
   }
   const { accessToken, refreshToken } = await buildToken(newUser, "user");
 
- 
   return accessToken;
 };
 
@@ -53,8 +52,6 @@ const _login = async (req, next) => {
     return next(new AppError("email or password is incorrect", 400));
   const { accessToken, refreshToken } = await buildToken(userDetails, "user");
 
-  
-
   await userToken.update(
     {
       refreshToken,
@@ -65,10 +62,10 @@ const _login = async (req, next) => {
       },
     }
   );
-  return accessToken
+  return accessToken;
 };
 
 module.exports = {
   _register,
-  _login
+  _login,
 };

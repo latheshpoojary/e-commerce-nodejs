@@ -1,3 +1,4 @@
+const { category } = require("../config/database.config");
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
@@ -11,11 +12,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
+        allowNull:false
       },
       desc: {
         type: DataTypes.STRING,
       },
-
+      parent_category_id:{ 
+        references: category,
+        reference_key: 'category_id',
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        
+      },
       deletedAt: {
         type: DataTypes.DATE,
       },

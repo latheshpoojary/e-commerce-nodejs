@@ -1,5 +1,10 @@
 const AppError = require("../utils/appError");
-const { order, order_details, product, seller } = require("../database/config/database.config");
+const {
+  order,
+  order_details,
+  product,
+  seller,
+} = require("../database/config/database.config");
 const { where } = require("sequelize");
 
 const _getOrderDetails = async (req, res, next) => {
@@ -40,8 +45,6 @@ const _getOrderDetails = async (req, res, next) => {
   }
 };
 
-
-
 const _orderSingleProduct = async (req, next) => {
   const { shipping_address, product_id, quantity } = req.body;
   if (!shipping_address || !product_id || !quantity)
@@ -49,28 +52,24 @@ const _orderSingleProduct = async (req, next) => {
       new AppError("shipping address or product id or quantity is required")
     );
   const newOrder = await order.create({
-    order_date:new Date(),
+    order_date: new Date(),
     shipping_address,
-    user_id:req.user.id
+    user_id: req.user.id,
   });
 
-  if(newOrder){
+  if (newOrder) {
     await order_details.create({
       quantity,
       product_id,
-      order_id:newOrder.order_id
-    })
-  }
-  else{
-    return next(
-      new AppError("Failed to add the order")
-    );
+      order_id: newOrder.order_id,
+    });
+  } else {
+    return next(new AppError("Failed to add the order"));
   }
   return newOrder;
-  
 };
 
 module.exports = {
   _orderSingleProduct,
-  _getOrderDetails
+  _getOrderDetails,
 };

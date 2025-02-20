@@ -21,13 +21,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
       },
       addressId: {
         references: address,
         reference_key: "address_id",
-        type: DataTypes.INTEGER,
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true,
+        defaultValue: [] 
+
         // references: {
         //   model: address,
         //   key: "address_id",
