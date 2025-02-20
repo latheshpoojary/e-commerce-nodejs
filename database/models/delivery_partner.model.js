@@ -1,0 +1,47 @@
+
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define(
+      "delivery_partner",
+      {
+        deliver_partner_id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
+        },
+        company_name:{
+          type:DataTypes.STRING
+        },
+        email:{
+          type:DataTypes.STRING,
+          unique:true
+        },
+        password:{
+          type:DataTypes.STRING,
+        },
+        phone:{
+          type:DataTypes.BIGINT,
+
+          
+        },
+      
+        pincode:{
+            type:DataTypes.INTEGER
+        },
+        city:{
+            type:DataTypes.STRING
+        },
+  
+        deletedAt: {
+          type: DataTypes.DATE,
+        },
+      },
+      {
+        paranoid: true, //actual data will not be deleted from the table;only work when the deleteAt field present in the table
+        freezeTableName: true,
+        modelName: "delivery_partner",
+        timestamp:true
+      }
+    );
+  };
+  

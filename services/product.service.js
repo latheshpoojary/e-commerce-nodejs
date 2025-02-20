@@ -45,6 +45,7 @@ const _getProductDetails = async (req, next) => {
         model:seller,
         attributes:['company_name']
     }],
+    attributes:['product_id','product_name','price','desc']
   });
   const specification_details = await productSpecification.findAll({
     where:{

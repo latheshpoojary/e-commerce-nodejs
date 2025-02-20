@@ -1,6 +1,6 @@
 const { verify } = require('jsonwebtoken');
 const AppError = require('../utils/appError');
-const { verifyRefreshToken } = require('../utils/jwt.service');
+const { verifyRefreshToken, verifyAccessToken } = require('../utils/jwt.service');
 const catchAsync = require('../utils/catchAsync');
 
 const authMiddleware = catchAsync(async (req,res,next)=>{
@@ -9,10 +9,12 @@ const authMiddleware = catchAsync(async (req,res,next)=>{
     const token = header.split('Bearer ')[1];
     if(!token) return next(new AppError('Permission is denied',403))
 
-    const payload = await verifyRefreshToken(token);
+    const payload = await verifyAccessToken(token);
     if(!payload)  return next(new AppError('Permission is denied',403))
     
-    res.user = payload;
+    req.user = payload;
+    
+    
     next();
     
 })

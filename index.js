@@ -14,6 +14,9 @@ const categoryRoute = require('./routes/category.route')
 const specificationCategoryRoute = require('./routes/specification_category.route')
 const specificationCategoryMapRoute = require('./routes/category_specification_map.route')
 const productRoute = require('./routes/product.route')
+const deliveryPartnerRoute = require('./routes/delivery_partner.route')
+const cartRoute = require('./routes/cart.route')
+const orderRoute = require('./routes/order.route')
 const refreshRoute = require('./routes/refreshToken.route')
 // require('./database/models/association')
 const app = express();
@@ -32,6 +35,9 @@ app.use('/api/v1/specification',specificationCategoryRoute);
 app.use('/api/v1/category_specification',specificationCategoryMapRoute);
 app.use('/api/v1/address',addressRoute);
 app.use('/api/v1/product',productRoute);
+app.use('/api/v1/delivery_partner',deliveryPartnerRoute);
+app.use('/api/v1/cart',cartRoute);
+app.use('/api/v1/order',orderRoute);
 app.use('/api/v1/refresh',refreshRoute);
 
 app.use('*',catchAsync(async (req,res,next)=>{

@@ -28,6 +28,22 @@ const productSpecification = require("../models/product_specification.model")(
   sequelize,
   Sequelize
 );
+const deliveryPartner = require("../models/delivery_partner.model")(
+  sequelize,
+  Sequelize
+);
+const cartTable = require("../models/cart.model")(
+  sequelize,
+  Sequelize
+);
+const order = require("../models/order.model")(
+  sequelize,
+  Sequelize
+);
+const order_details = require("../models/order_details.model")(
+  sequelize,
+  Sequelize
+);
 
 
 sequelize
@@ -70,6 +86,27 @@ productSpecification.belongsTo(specification, {
   foreignKey: "specificationRef_id",
   targetKey: "specification_id",
 });
+cartTable.belongsTo(product,{
+  foreignKey: "product_id",
+  targetKey: "product_id",
+})
+cartTable.belongsTo(user,{
+  foreignKey: "user_id",
+  targetKey: "user_id",
+})
+order.belongsTo(user,{
+  foreignKey: "user_id",
+  targetKey: "user_id",
+})
+order_details.belongsTo(order,{
+  foreignKey: "order_id",
+  targetKey: "order_id",
+})
+order_details.belongsTo(product,{
+  foreignKey: "product_id",
+  targetKey: "product_id",
+})
+
 
 module.exports = {
   address,
@@ -80,5 +117,9 @@ module.exports = {
   userToken,
   categorySpecification,
   product,
-  productSpecification
+  productSpecification,
+  deliveryPartner,
+  cartTable,
+  order,
+  order_details
 };

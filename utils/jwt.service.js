@@ -39,6 +39,11 @@ const buildToken = async (user,role)=>{
     return {accessToken,refreshToken}
 }
 
+const verifyAccessToken  = async (token)=>{
+    const payload = verify(token,ENV_KEYS.JWT_SECRET);
+    return payload;
+}
+
 const verifyRefreshToken = async (token)=>{
     console.log(token);
     
@@ -61,5 +66,6 @@ const verifyRefreshToken = async (token)=>{
 
 module.exports = {
     buildToken,
-    verifyRefreshToken
+    verifyRefreshToken,
+    verifyAccessToken
 }

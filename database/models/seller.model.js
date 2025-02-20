@@ -11,27 +11,27 @@ module.exports = (sequelize,DataTypes)=>{
       primaryKey:true,
       type:DataTypes.INTEGER
     },
-    company_name:{
-      type:DataTypes.STRING
-    },
-    email:{
-      type:DataTypes.STRING,
-      unique:true
-    },
-    password:{
-      type:DataTypes.STRING,
-    },
-    phone:{
-      type:DataTypes.INTEGER,
-      
-    },
-   
-    pincode:{
-        type:DataTypes.INTEGER
-    },
-    city:{
+      company_name:{
         type:DataTypes.STRING
-    },
+      },
+      email:{
+        type:DataTypes.STRING,
+        unique:true
+      },
+      password:{
+        type:DataTypes.STRING,
+      },
+      phone:{
+        type:DataTypes.BIGINT,
+        
+      },
+    
+      pincode:{
+          type:DataTypes.INTEGER
+      },
+      city:{
+          type:DataTypes.STRING
+      },
     deletedAt:{
       type:DataTypes.DATE
     }
