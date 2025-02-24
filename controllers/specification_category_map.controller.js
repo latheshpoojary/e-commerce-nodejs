@@ -16,11 +16,7 @@ const mapCategorySpecification = catchAsync(async (req, res, next) => {
     console.log(data[i], "First element");
 
     const { category_id, specification_id } = data[i];
-    console.log(
-      category_id,
-      specification_id,
-      "Specificationid and category id"
-    );
+    
 
     for (let j = 0; j <= specification_id.length - 1; j++) {
       console.log(categorySpecification, "category specification");

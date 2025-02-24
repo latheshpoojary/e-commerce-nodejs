@@ -23,19 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       phone: {
         type: DataTypes.BIGINT,
       },
-      addressId: {
-        references: address,
-        reference_key: "address_id",
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: true,
-        defaultValue: [] 
-
-        // references: {
-        //   model: address,
-        //   key: "address_id",
-        // },
-        // type:DataTypes.ARRAY(DataTypes.INTEGER)/
-      },
+      
       deletedAt: {
         type: DataTypes.DATE,
       },

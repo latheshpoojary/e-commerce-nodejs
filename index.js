@@ -9,12 +9,14 @@ const catchAsync = require("./utils/catchAsync");
 const authRoute = require("./routes/auth.route");
 const userRoute = require("./routes/user.route");
 const addressRoute = require("./routes/address.route");
-const sellerRoute = require("./routes/seller.route");
+const sellerRoute = require("./modules/sellers/seller.route");
 const categoryRoute = require("./routes/category.route");
 const specificationCategoryRoute = require("./routes/specification_category.route");
 const specificationCategoryMapRoute = require("./routes/category_specification_map.route");
 const productRoute = require("./routes/product.route");
 const deliveryPartnerRoute = require("./routes/delivery_partner.route");
+
+  
 const cartRoute = require("./routes/cart.route");
 const orderRoute = require("./routes/order.route");
 const refreshRoute = require("./routes/refreshToken.route");

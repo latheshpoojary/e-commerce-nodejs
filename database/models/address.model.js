@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const { user } = require("../config/database.config");
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
@@ -24,9 +25,16 @@ module.exports = (sequelize, DataTypes) => {
       house_name: {
         type: DataTypes.STRING,
       },
+      user_id: {
+        reference: user,
+        reference_key: "user_id",
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       deletedAt: {
         type: DataTypes.BOOLEAN,
       },
+
     },
     {
       paranoid: true, //actual data will not be deleted from the table;only work when the deleteAt field present in the table

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         reference: user,
         reference_key: "user_id",
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
       },
       refreshToken: {
         type: DataTypes.STRING,

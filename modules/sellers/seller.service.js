@@ -1,4 +1,4 @@
-const { seller, user } = require("../database/config/database.config");
+const { seller, user } = require("../../database/config/database.config");
 
 const _onBoardSeller = async (req, next) => {
   const { company_name, email, phone, pincode, city } = req.body;
